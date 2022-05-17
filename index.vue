@@ -34,6 +34,7 @@ export default
 	directives: clickOutside: vClickOutside.directive
 
 	props:
+		
 		# Tooltip button aria-label
 		ariaLabel:
 			type: String
@@ -77,10 +78,7 @@ export default
 		id: @getUid()
 
 	computed:
-
-		classes: -> [
-			if @active then 'active'
-		]
+		classes: -> [ 'active' if @active ]
 
 	mounted: -> @update()
 
@@ -119,6 +117,7 @@ export default
 
 	watch:
 
+		# Use nextTick so our refs exist
 		active: -> @$nextTick ->
 			if @active
 				@update()

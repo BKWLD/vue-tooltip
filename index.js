@@ -227,6 +227,12 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
     transition: {
       type: String,
       default: 'panel'
+    },
+    // Subscribe to scroll and resize events so we can
+    // re-position the tooltip panel in viewport
+    autoUpdate: {
+      type: Boolean,
+      default: true
     }
   },
   data: function () {
@@ -288,6 +294,7 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
     }
   },
   watch: {
+    // Use nextTick so our refs exist
     active: function () {
       return this.$nextTick(function () {
         if (this.active) {
