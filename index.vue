@@ -128,15 +128,24 @@ export default
 @import '~bukwild-stylus-library/index.styl'
 
 .tooltip-btn
+	// Make a "?" centered inside a circle
+	display flex
+	align-items center
+	justify-content center	
 	border-radius 20px
-	background white
+	width 20px
+	height @width
+	font-size 14px
+	background black
+	color white
 
 .tooltip-btn-icon
-	color black
-	font-size 14px
-	padding 0.0em 0.4em 0.1em
+	// Most fonts position the "?" too low
+	position relative
+	top -.06em
 
 .tooltip-panel
+	// Required by floating-ui
 	position absolute
 
 .panel-enter-active, .panel-leave-active
