@@ -66,6 +66,12 @@ export default
 			type: String
 			default: 'panel'
 
+		# Subscribe to scroll and resize events so we can
+		# re-position the tooltip panel in viewport
+		autoUpdate:
+			type: Boolean
+			default: true
+
 	data: -> 
 		active: @openOnMount
 		id: @getUid()
