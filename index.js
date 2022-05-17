@@ -82,27 +82,39 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("@floating-ui/dom");
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 1 */
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("v-click-outside");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -116,9 +128,58 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "tooltip" },
-    [_vm._v("I'm a tooltip"), _vm._t("default")],
-    2
+    { staticClass: "tooltip", class: _vm.classes },
+    [
+      _c(
+        "button",
+        {
+          ref: "button",
+          staticClass: "tooltip-btn",
+          attrs: {
+            "aria-label": _vm.ariaLabel,
+            "aria-expanded": _vm.active,
+            "aria-described-by": "tooltip-" + _vm.id,
+          },
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              return _vm.onClick.apply(null, arguments)
+            },
+          },
+        },
+        [
+          _vm._t("button", function () {
+            return [
+              _c("div", { staticClass: "tooltip-btn-icon" }, [_vm._v("?")]),
+            ]
+          }),
+        ],
+        2
+      ),
+      _c("transition", { attrs: { name: _vm.transition } }, [
+        _vm.active
+          ? _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "click-outside",
+                    rawName: "v-click-outside",
+                    value: _vm.onClickOutside,
+                    expression: "onClickOutside",
+                  },
+                ],
+                ref: "panel",
+                staticClass: "tooltip-panel",
+                attrs: { role: "tooltip", id: "tooltip-" + _vm.id },
+              },
+              [_vm._t("default")],
+              2
+            )
+          : _vm._e(),
+      ]),
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -127,14 +188,122 @@ render._withStripped = true
 
 // CONCATENATED MODULE: ./index.vue?vue&type=template&id=6de5ab34&lang=pug&
 
+// EXTERNAL MODULE: external "@floating-ui/dom"
+var dom_ = __webpack_require__(0);
+
+// EXTERNAL MODULE: external "v-click-outside"
+var external_v_click_outside_ = __webpack_require__(2);
+var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(external_v_click_outside_);
+
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=coffee&
+
+
 /* harmony default export */ var lib_vue_loader_options_indexvue_type_script_lang_coffee_ = ({
-  name: 'VueTooltip'
+  name: 'VueTooltip',
+  directives: {
+    clickOutside: external_v_click_outside_default.a.directive
+  },
+  props: {
+    // Tooltip button aria-label
+    ariaLabel: {
+      type: String,
+      default: 'More Information'
+    },
+    openOnMount: {
+      type: Boolean,
+      default: false
+    },
+    placement: {
+      type: String,
+      default: 'right-start',
+      validator: function (val) {
+        return val === 'top' || val === 'top-start' || val === 'top-end' || val === 'bottom' || val === 'bottom-start' || val === 'bottom-end' || val === 'left' || val === 'right' || val === 'right-start';
+      }
+    },
+    offset: {
+      type: Number,
+      default: 10
+    },
+    transition: {
+      type: String,
+      default: 'panel'
+    }
+  },
+  data: function () {
+    return {
+      active: this.openOnMount,
+      id: this.getUid()
+    };
+  },
+  computed: {
+    classes: function () {
+      return [this.active ? 'active' : void 0];
+    }
+  },
+  mounted: function () {
+    return this.update();
+  },
+  beforeDestroy: function () {
+    return typeof this.cleanup === "function" ? this.cleanup() : void 0;
+  },
+  methods: {
+    onClick: function () {
+      return this.active = !this.active;
+    },
+    onClickOutside: function () {
+      return this.active = false;
+    },
+    applyStyles: function ({
+      x,
+      y,
+      strategy
+    } = {
+      x: 0,
+      y: 0,
+      strategy: 'absolute'
+    }) {
+      return Object.assign(this.panelElement.style, {
+        left: `${x}px`,
+        top: `${y}px`
+      });
+    },
+    // Generate a unique string comprised of numbers and lowercase letters.
+    getUid: function (strLength = 8) {
+      return Math.random().toString(36).substr(2, strLength);
+    },
+    update: function () {
+      // Elements
+      if (!(this.buttonElement = this.$refs.button)) {
+        return;
+      }
+
+      if (!(this.panelElement = this.$refs.panel)) {
+        return;
+      }
+
+      return Object(dom_["computePosition"])(this.buttonElement, this.panelElement, {
+        placement: this.placement,
+        middleware: [Object(dom_["offset"])(this.offset), Object(dom_["flip"])(), Object(dom_["shift"])()]
+      }).then(this.applyStyles);
+    }
+  },
+  watch: {
+    active: function () {
+      return this.$nextTick(function () {
+        if (this.active) {
+          this.update();
+          return this.cleanup = Object(dom_["autoUpdate"])(this.buttonElement, this.panelElement, this.update);
+        } else {
+          return typeof this.cleanup === "function" ? this.cleanup() : void 0;
+        }
+      });
+    }
+  }
 });
 // CONCATENATED MODULE: ./index.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var indexvue_type_script_lang_coffee_ = (lib_vue_loader_options_indexvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./index.vue?vue&type=style&index=0&lang=stylus&
-var indexvue_type_style_index_0_lang_stylus_ = __webpack_require__(1);
+var indexvue_type_style_index_0_lang_stylus_ = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */

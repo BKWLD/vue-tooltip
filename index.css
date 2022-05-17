@@ -1,1 +1,26 @@
+.tooltip-btn {
+  border-radius: 20px;
+  background: #fff;
+}
+.tooltip-btn-icon {
+  color: #000;
+  font-size: 14px;
+  padding: 0em 0.4em 0.1em;
+}
+.tooltip-panel {
+  position: absolute;
+}
+.panel-enter-active,
+.panel-leave-active {
+  transition: opacity 0.2s, transform 0.3s ease-out;
+}
+.panel-enter-to,
+.panel-leave {
+  opacity: 1;
+}
+.panel-enter,
+.panel-leave-to {
+  opacity: 0;
+  transform: translateY(5px);
+}
 
