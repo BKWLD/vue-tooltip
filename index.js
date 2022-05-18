@@ -127,35 +127,27 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "tooltip", class: _vm.classes },
-    [
-      _c(
-        "button",
-        {
-          ref: "button",
-          staticClass: "tooltip-btn",
-          attrs: {
-            "aria-label": _vm.ariaLabel,
-            "aria-expanded": _vm.active,
-            "aria-described-by": "tooltip-" + _vm.id,
-          },
-          on: {
-            click: function ($event) {
-              $event.preventDefault()
-              return _vm.onClick.apply(null, arguments)
-            },
-          },
+    "button",
+    {
+      ref: "button",
+      staticClass: "tooltip-btn",
+      class: _vm.classes,
+      attrs: {
+        "aria-label": _vm.ariaLabel,
+        "aria-expanded": _vm.active,
+        "aria-described-by": "tooltip-" + _vm.id,
+      },
+      on: {
+        click: function ($event) {
+          $event.preventDefault()
+          return _vm.onClick.apply(null, arguments)
         },
-        [
-          _vm._t("button", function () {
-            return [
-              _c("div", { staticClass: "tooltip-btn-icon" }, [_vm._v("?")]),
-            ]
-          }),
-        ],
-        2
-      ),
+      },
+    },
+    [
+      _vm._t("button", function () {
+        return [_c("div", { staticClass: "tooltip-btn-icon" }, [_vm._v("?")])]
+      }),
       _c("transition", { attrs: { name: _vm.transition } }, [
         _vm.active
           ? _c(
@@ -179,7 +171,7 @@ var render = function () {
           : _vm._e(),
       ]),
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

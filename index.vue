@@ -1,14 +1,14 @@
 <template lang='pug'>
 
-.tooltip(:class='classes')
-	button.tooltip-btn(
-		:aria-label='ariaLabel'
-		:aria-expanded='active'
-		:aria-described-by='`tooltip-${id}`'
-		@click.prevent='onClick'
-		ref='button'
-	)
-		slot(name='button'): .tooltip-btn-icon ?
+button.tooltip-btn(
+	:aria-label='ariaLabel'
+	:aria-expanded='active'
+	:aria-described-by='`tooltip-${id}`'
+	@click.prevent='onClick'
+	:class='classes'
+	ref='button'
+)
+	slot(name='button'): .tooltip-btn-icon ?
 
 	transition(:name='transition')
 		.tooltip-panel(
