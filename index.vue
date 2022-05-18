@@ -48,20 +48,15 @@ export default
 			type: String
 			default: 'right-start'
 			validator: (val) -> val in [
-				'top'
-				'top-start'
-				'top-end'
-				'bottom'
-				'bottom-start'
-				'bottom-end'
-				'left'
-				'right'
-				'right-start'
+				'top', 'top-start', 'top-end'
+				'bottom', 'bottom-start', 'bottom-end'
+				'left', 'left-start', 'left-end'
+				'right', 'right-start', 'right-end'
 			]
 		
 		offset:
-			type: Number
-			default: 10
+			type: [ Boolean, Number ]
+			default: true
 		
 		transition:
 			type: String
@@ -72,10 +67,29 @@ export default
 		autoUpdate:
 			type: Boolean
 			default: true
+		
+		# Flip: Switch to fallback placements to keep panel in viewport
+		# Pass `false` (to disable) or options object
+		# https://floating-ui.com/docs/flip
+		flip:
+			type: [ Boolean, Object ]
+			default: true
 
 	data: -> 
+		
 		active: @openOnMount
+		
 		id: @getUid()
+
+		# Default values.  We use these when a prop is 'true'
+		defaults:
+			offset: 10
+			flip:
+				fallbackPlacements: [
+					'right-start', 'right-end'
+					'top-start', 'top', 'top-end'
+					'bottom-start', 'bottom', 'bottom-end'
+				]
 
 	computed:
 		classes: -> [ 'active' if @active ]
@@ -104,14 +118,24 @@ export default
 			# Elements
 			return unless @buttonElement = @$refs.button
 			return unless @panelElement = @$refs.panel
+
+			# Middleware
+			# If prop is true, use defaults, else pass the options object.
+			middleware = []
+			if @offset
+				if @offset == true
+					middleware.push offset(@defaults.offset) 
+				else
+					middleware.push offset(@offset)
+			if @flip
+				if @flip == true
+					middleware.push flip(@defaults.flip) 
+				else
+					middleware.push flip(@flip)
 	
 			computePosition(@buttonElement, @panelElement, {
 				placement: @placement,
-				middleware: [
-					offset(@offset)
-					flip()
-					shift()
-				]
+				middleware: middleware
 			}).then(@applyStyles)
 
 
@@ -121,7 +145,7 @@ export default
 		active: -> @$nextTick ->
 			if @active
 				@update()
-				@cleanup = autoUpdate @buttonElement, @panelElement, @update
+				@cleanup = autoUpdate(@buttonElement, @panelElement, @update) if @autoUpdate
 			else
 				@cleanup?()
 

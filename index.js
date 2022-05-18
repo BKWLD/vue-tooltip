@@ -209,12 +209,12 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
       type: String,
       default: 'right-start',
       validator: function (val) {
-        return val === 'top' || val === 'top-start' || val === 'top-end' || val === 'bottom' || val === 'bottom-start' || val === 'bottom-end' || val === 'left' || val === 'right' || val === 'right-start';
+        return val === 'top' || val === 'top-start' || val === 'top-end' || val === 'bottom' || val === 'bottom-start' || val === 'bottom-end' || val === 'left' || val === 'left-start' || val === 'left-end' || val === 'right' || val === 'right-start' || val === 'right-end';
       }
     },
     offset: {
-      type: Number,
-      default: 10
+      type: [Boolean, Number],
+      default: true
     },
     transition: {
       type: String,
@@ -225,12 +225,26 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
     autoUpdate: {
       type: Boolean,
       default: true
+    },
+    // Flip: Switch to fallback placements to keep panel in viewport
+    // Pass `false` (to disable) or options object
+    // https://floating-ui.com/docs/flip
+    flip: {
+      type: [Boolean, Object],
+      default: true
     }
   },
   data: function () {
     return {
       active: this.openOnMount,
-      id: this.getUid()
+      id: this.getUid(),
+      // Default values.  We use these when a prop is 'true'
+      defaults: {
+        offset: 10,
+        flip: {
+          fallbackPlacements: ['right-start', 'right-end', 'top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end']
+        }
+      }
     };
   },
   computed: {
@@ -270,18 +284,39 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
       return Math.random().toString(36).substr(2, strLength);
     },
     update: function () {
-      // Elements
+      var middleware; // Elements
+
       if (!(this.buttonElement = this.$refs.button)) {
         return;
       }
 
       if (!(this.panelElement = this.$refs.panel)) {
         return;
+      } // Middleware
+      // If prop is true, use defaults, else pass the options object.
+
+
+      middleware = [];
+
+      if (this.offset) {
+        if (this.offset === true) {
+          middleware.push(Object(dom_["offset"])(this.defaults.offset));
+        } else {
+          middleware.push(Object(dom_["offset"])(this.offset));
+        }
+      }
+
+      if (this.flip) {
+        if (this.flip === true) {
+          middleware.push(Object(dom_["flip"])(this.defaults.flip));
+        } else {
+          middleware.push(Object(dom_["flip"])(this.flip));
+        }
       }
 
       return Object(dom_["computePosition"])(this.buttonElement, this.panelElement, {
         placement: this.placement,
-        middleware: [Object(dom_["offset"])(this.offset), Object(dom_["flip"])(), Object(dom_["shift"])()]
+        middleware: middleware
       }).then(this.applyStyles);
     }
   },
@@ -291,7 +326,10 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
       return this.$nextTick(function () {
         if (this.active) {
           this.update();
-          return this.cleanup = Object(dom_["autoUpdate"])(this.buttonElement, this.panelElement, this.update);
+
+          if (this.autoUpdate) {
+            return this.cleanup = Object(dom_["autoUpdate"])(this.buttonElement, this.panelElement, this.update);
+          }
         } else {
           return typeof this.cleanup === "function" ? this.cleanup() : void 0;
         }
