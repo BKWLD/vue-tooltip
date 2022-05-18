@@ -1,5 +1,6 @@
 {
   "name": "@bkwld/vue-tooltip",
+  "version": "0.0.1",
   "description": "Vue 2 tooltip wrapper with slotted content",
   "main": "index.js",
   "scripts": {
