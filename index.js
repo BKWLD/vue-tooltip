@@ -136,6 +136,7 @@ var render = function () {
         "aria-label": _vm.ariaLabel,
         "aria-expanded": _vm.active,
         "aria-described-by": "tooltip-" + _vm.id,
+        type: "button",
       },
       on: {
         click: function ($event) {

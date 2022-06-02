@@ -1,5 +1,8 @@
 <template lang='pug'>
 
+//- On click prevent default or else if we're inside a form we might submit the form.
+//- Type='button' is important so that we ignore Enter key events
+//- on input elements if we're inside a form.
 button.tooltip-btn(
 	:aria-label='ariaLabel'
 	:aria-expanded='active'
@@ -7,6 +10,7 @@ button.tooltip-btn(
 	@click.prevent='onClick'
 	:class='classes'
 	ref='button'
+	type='button'
 )
 	slot(name='button'): .tooltip-btn-icon ?
 
