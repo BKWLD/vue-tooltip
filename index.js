@@ -323,18 +323,23 @@ var external_v_click_outside_default = /*#__PURE__*/__webpack_require__.n(extern
   },
   watch: {
     // Use nextTick so our refs exist
-    active: function () {
-      return this.$nextTick(function () {
-        if (this.active) {
-          this.update();
+    active: {
+      immediate: true,
+      handler: function () {
+        return this.$nextTick(function () {
+          if (this.active) {
+            this.update();
 
-          if (this.autoUpdate) {
-            return this.cleanup = Object(dom_["autoUpdate"])(this.buttonElement, this.panelElement, this.update);
+            if (this.autoUpdate) {
+              console.log('autoUpdate setup');
+              return this.cleanup = Object(dom_["autoUpdate"])(this.buttonElement, this.panelElement, this.update);
+            }
+          } else {
+            console.log('autoUpdate cleanup');
+            return typeof this.cleanup === "function" ? this.cleanup() : void 0;
           }
-        } else {
-          return typeof this.cleanup === "function" ? this.cleanup() : void 0;
-        }
-      });
+        });
+      }
     }
   }
 });

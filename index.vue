@@ -146,12 +146,14 @@ export default
 	watch:
 
 		# Use nextTick so our refs exist
-		active: -> @$nextTick ->
-			if @active
-				@update()
-				@cleanup = autoUpdate(@buttonElement, @panelElement, @update) if @autoUpdate
-			else
-				@cleanup?()
+		active: 
+			immediate: true
+			handler: -> @$nextTick ->
+				if @active
+					@update()
+					@cleanup = autoUpdate(@buttonElement, @panelElement, @update) if @autoUpdate						
+				else
+					@cleanup?()
 
 </script>
 
