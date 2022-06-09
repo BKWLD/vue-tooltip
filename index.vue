@@ -1,6 +1,6 @@
 <template lang='pug'>
 
-//- On click prevent default or else if we're inside a form we might submit the form.
+//- On click prevent default, or else if we're inside a form we might submit the form.
 //- Type='button' is important so that we ignore Enter key events
 //- on input elements if we're inside a form.
 button.tooltip-btn(
