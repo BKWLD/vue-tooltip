@@ -1,16 +1,16 @@
 # Vue Tooltip
 
-A component that renders a `button.tooltip-btn`.  Clicking the button reveals a floating `.tooltip-panel` with the slotted contents positioned with (Floating UI)[https://floating-ui.com/].
+A component that renders a `button.tooltip-btn`.  Clicking the button reveals a floating `.tooltip-panel` with the slotted contents positioned with [Floating UI](https://floating-ui.com/).
 
 ## Props
 
 * `placement`: Tooltip panel's placement relative to the tooltip button.  Can be "top", "bottom", "left", "right".  Optionally append any value with "-start" or "-end".  Default: "right-start"
-* (offset)[https://floating-ui.com/docs/autoUpdate]: Number.  Pixel distance between .tooltip-btn and .tooltip-panel.  Default: 10. 
+* [offset](https://floating-ui.com/docs/autoUpdate): Number.  Pixel distance between .tooltip-btn and .tooltip-panel.  Default: 10. 
 * `ariaLabel`: Determines .tooltip-btn's aria-label attribute.  Default: "More Information"
 * `openOnMount`: When true, tooltip is open on mount. Default: false. 
 * `transition`: String.  Override the `.tooltip-panel` vue transition. Default: "panel".
-* (autoUpdate)[https://floating-ui.com/docs/autoUpdate]: Boolean.  Adds scroll and resize listeners that will attempt to re-position the tooltip panel so that it doesn't go off the viewport edges.  Default: `true`.
-* (flip)[https://floating-ui.com/docs/flip]: True, false, or options object. 
+* [autoUpdate](https://floating-ui.com/docs/autoUpdate): Boolean.  Adds scroll and resize listeners that will attempt to re-position the tooltip panel so that it doesn't go off the viewport edges.  Default: `true`.
+* [flip](https://floating-ui.com/docs/flip): True, false, or options object. 
 
 ## Usage (Simple)
 
