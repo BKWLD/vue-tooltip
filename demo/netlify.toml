@@ -1,0 +1,8 @@
+[dev]
+   command = "yarn dev"
+
+[build]
+  command = 'CI= yarn generate'
+  publish = 'dist'
+
+

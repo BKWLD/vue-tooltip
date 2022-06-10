@@ -1,0 +1,14 @@
+logo:
+  label: vue-tooltip
+  url: https://github.com/BKWLD/vue-tooltip
+
+links:
+  -
+    title: Introduction
+    path: /
+  -
+    title: Options
+    path: /options
+  -
+    title: Custom Component
+    path: /custom-component

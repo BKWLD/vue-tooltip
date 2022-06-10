@@ -1,0 +1,14 @@
+{
+	"primary-color-dark": "#008c44",
+	"offwhite": "#edf0f5",
+	"disabled-fill": "#cccccc",
+	"ui-border-color": "#e0e0e0",
+	"warning-color": "#AF4242",
+
+	"primary-background": "#272760",
+	"secondary-background": "#442768",
+	"primary-color": "#0cffe1",
+	"secondary-color": "#ed1e79",
+	"instructions-color": "#7a7ac9",
+	"body-color": "#bcbce4"
+}
